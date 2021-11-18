@@ -2,13 +2,28 @@ package com.grupo11.universidade.entidades;
 
 import java.util.Date;
 
-public class PessoaFisica {
+public abstract class PessoaFisica {
 
-	private long cpf;
-	private String nome;
-	private Date dataDeNascimento;
-	private String email;
-	private long telefone;
+	protected long cpf;
+	protected String nome;
+	protected Date dataDeNascimento;
+	protected String email;
+	protected long telefone;
+	
+	public PessoaFisica(
+			long cpf, 
+			String nome, 
+			Date dataDeNascimento, 
+			String email, 
+			long telefone) {
+		
+		super();
+		this.cpf = cpf;
+		this.nome = nome;
+		this.dataDeNascimento = dataDeNascimento;
+		this.email = email;
+		this.telefone = telefone;
+	}
 	
 	public long getCpf() {
 		return cpf;
