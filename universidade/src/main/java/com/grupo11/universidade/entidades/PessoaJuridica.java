@@ -2,24 +2,33 @@ package com.grupo11.universidade.entidades;
 
 public abstract class PessoaJuridica {
 
+	protected long id;
 	protected long cnpj;
 	protected String nome;
 	protected String email;
 	protected long telefone;
 	
 	public PessoaJuridica(
+			long id,
 			long cnpj, 
 			String nome, 
 			String email, 
 			long telefone) {
 		
 		super();
-		this.cnpj = cnpj;
-		this.nome = nome;
-		this.email = email;
-		this.telefone = telefone;
+		setId(id);
+		setCnpj(cnpj);
+		setNome(nome);
+		setEmail(email);
+		setTelefone(telefone);
 	}
 	
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
 	public long getCnpj() {
 		return cnpj;
 	}

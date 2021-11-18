@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,7 +23,7 @@ public class AlunoController implements CRUD<Aluno> {
 	
 	@Override
 	@PostMapping
-	public Aluno criar(Aluno aluno) {
+	public Aluno criar(@RequestBody Aluno aluno) {
 		return alunoService.criar(aluno);
 	}
 
@@ -40,7 +41,7 @@ public class AlunoController implements CRUD<Aluno> {
 
 	@Override
 	@PutMapping
-	public Aluno atualizar(Aluno aluno) {
+	public Aluno atualizar(@RequestBody Aluno aluno) {
 		return alunoService.atualizar(aluno);
 	}
 
@@ -51,3 +52,42 @@ public class AlunoController implements CRUD<Aluno> {
 	}
 
 }
+/**
+ * Exemplo de uso:
+ * 
+//@ts-check
+
+/**
+* @typedef {{
+* id: number,
+* cpf: number,
+* nome: string,
+* dataDeNascimento: Date,
+* email: string,
+* telefone: number,
+* status: number
+* }} Aluno
+*/
+
+/**@type {Aluno}*/
+/**
+const a = {
+  id: 5,
+  cpf: 2,
+  nome: "paz",
+  dataDeNascimento: new Date(2000, 11, 25),
+  email: "teste@teste.JavaScript",
+  telefone: 312,
+  status: 0,
+}
+
+fetch("/alunos", {
+  method: "POST",
+  body:  JSON.stringify(a),
+  headers: {
+      "Content-Type": "application/json"
+  }
+})
+.then(response => response.json())
+.then(json => console.log(json));
+*/

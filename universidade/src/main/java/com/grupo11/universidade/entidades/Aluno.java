@@ -4,27 +4,37 @@ import java.util.Date;
 
 public class Aluno extends PessoaFisica {
 
-	private long matricula;
+	public static enum Status {
+		
+		INATIVO(0), ATIVO(1);
+
+		public final int id;
+		
+		Status(int id) {
+			this.id = id;
+		}
+	}
 	
+	private int status;
+
 	public Aluno(
+			long id,
 			long cpf,
 			String nome,
 			Date dataDeNascimento,
 			String email,
 			long telefone,
-			long matricula) {
+			Status status) {
 		
-		super(cpf, nome, dataDeNascimento, email, telefone);
-		
-		this.matricula = matricula;
+		super(id, cpf, nome, dataDeNascimento, email, telefone);
+		setStatus(status);
 	}
 
-	public long getMatricula() {
-		return matricula;
+	public int getStatus() {
+		return status;
 	}
-
-	public void setMatricula(long matricula) {
-		this.matricula = matricula;
+	public void setStatus(Status status) {
+		this.status = status.id;
 	}
 	
 }

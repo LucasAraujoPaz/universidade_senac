@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,7 +23,7 @@ public class FornecedorController implements CRUD<Fornecedor> {
 	
 	@Override
 	@PostMapping
-	public Fornecedor criar(Fornecedor fornecedor) {
+	public Fornecedor criar(@RequestBody Fornecedor fornecedor) {
 		return fornecedorService.criar(fornecedor);
 	}
 
@@ -40,7 +41,7 @@ public class FornecedorController implements CRUD<Fornecedor> {
 
 	@Override
 	@PutMapping
-	public Fornecedor atualizar(Fornecedor fornecedor) {
+	public Fornecedor atualizar(@RequestBody Fornecedor fornecedor) {
 		return fornecedorService.atualizar(fornecedor);
 	}
 

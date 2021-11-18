@@ -5,6 +5,7 @@ import java.util.Date;
 public class Professor extends PessoaFisica {
 	
 	public Professor(
+			long id,
 			long cpf,
 			String nome,
 			Date dataDeNascimento,
@@ -12,8 +13,8 @@ public class Professor extends PessoaFisica {
 			long telefone,
 			float salario) {
 		
-		super(cpf, nome, dataDeNascimento, email, telefone);
-		this.salario = salario;
+		super(id, cpf, nome, dataDeNascimento, email, telefone);
+		setSalario(salario);
 	}
 	
 	private float salario;
@@ -21,7 +22,6 @@ public class Professor extends PessoaFisica {
 	public float getSalario() {
 		return salario;
 	}
-
 	public void setSalario(float salario) {
 		this.salario = salario;
 	}

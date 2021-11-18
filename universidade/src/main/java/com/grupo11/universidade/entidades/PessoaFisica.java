@@ -4,6 +4,7 @@ import java.util.Date;
 
 public abstract class PessoaFisica {
 
+	protected long id;
 	protected long cpf;
 	protected String nome;
 	protected Date dataDeNascimento;
@@ -11,20 +12,28 @@ public abstract class PessoaFisica {
 	protected long telefone;
 	
 	public PessoaFisica(
-			long cpf, 
+			Long id,
+			Long cpf, 
 			String nome, 
 			Date dataDeNascimento, 
 			String email, 
-			long telefone) {
+			Long telefone) {
 		
 		super();
-		this.cpf = cpf;
-		this.nome = nome;
-		this.dataDeNascimento = dataDeNascimento;
-		this.email = email;
-		this.telefone = telefone;
+		setId(id);
+		setCpf(cpf);
+		setNome(nome);
+		setDataDeNascimento(dataDeNascimento);
+		setEmail(email);
+		setTelefone(telefone);
 	}
 	
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
 	public long getCpf() {
 		return cpf;
 	}
