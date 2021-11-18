@@ -11,7 +11,7 @@ import com.grupo11.universidade.interfaces.CRUD;
 public class FornecedorRepository implements CRUD<Fornecedor> {
 
 	@Override
-	public Fornecedor criar(Fornecedor entidade) {
+	public Fornecedor criar(Fornecedor fornecedor) {
 		return null;
 	}
 
@@ -26,7 +26,7 @@ public class FornecedorRepository implements CRUD<Fornecedor> {
 	}
 
 	@Override
-	public Fornecedor atualizar(Fornecedor a) {
+	public Fornecedor atualizar(Fornecedor fornecedor) {
 		return null;
 	}
 

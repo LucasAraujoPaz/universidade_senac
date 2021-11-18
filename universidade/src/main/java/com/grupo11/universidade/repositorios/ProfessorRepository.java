@@ -11,7 +11,7 @@ import com.grupo11.universidade.interfaces.CRUD;
 public class ProfessorRepository implements CRUD<Professor> {
 
 	@Override
-	public Professor criar(Professor entidade) {
+	public Professor criar(Professor professor) {
 		return null;
 	}
 
@@ -26,7 +26,7 @@ public class ProfessorRepository implements CRUD<Professor> {
 	}
 
 	@Override
-	public Professor atualizar(Professor a) {
+	public Professor atualizar(Professor professor) {
 		return null;
 	}
 

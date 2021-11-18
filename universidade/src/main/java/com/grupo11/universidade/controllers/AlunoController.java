@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +28,7 @@ public class AlunoController implements CRUD<Aluno> {
 
 	@Override
 	@GetMapping("/{id}")
-	public Aluno obter(long id) {
+	public Aluno obter(@PathVariable long id) {
 		return alunoService.obter(id);
 	}
 
@@ -45,7 +46,7 @@ public class AlunoController implements CRUD<Aluno> {
 
 	@Override
 	@DeleteMapping("/{id}")
-	public boolean deletar(long id) {
+	public boolean deletar(@PathVariable long id) {
 		return alunoService.deletar(id);
 	}
 

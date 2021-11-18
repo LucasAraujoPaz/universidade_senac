@@ -6,33 +6,36 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.grupo11.universidade.entidades.Aluno;
 import com.grupo11.universidade.interfaces.CRUD;
+import com.grupo11.universidade.repositorios.AlunoRepository;
 
 @RestController
 public class AlunoService implements CRUD<Aluno> {
 
+	private static final AlunoRepository alunoRepository = new AlunoRepository();
+	
 	@Override
-	public Aluno criar(Aluno entidade) {
-		return null;
+	public Aluno criar(Aluno aluno) {
+		return alunoRepository.criar(aluno);
 	}
 
 	@Override
 	public Aluno obter(long id) {
-		return null;
+		return alunoRepository.obter(id);
 	}
 
 	@Override
 	public List<Aluno> listar() {
-		return null;
+		return alunoRepository.listar();
 	}
 
 	@Override
-	public Aluno atualizar(Aluno a) {
-		return null;
+	public Aluno atualizar(Aluno aluno) {
+		return alunoRepository.atualizar(aluno);
 	}
 
 	@Override
 	public boolean deletar(long id) {
-		return false;
+		return alunoRepository.deletar(id);
 	}
 
 }
