@@ -1,13 +1,10 @@
 package com.grupo11.universidade.repositorios;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.grupo11.universidade.entidades.Aluno;
 import com.grupo11.universidade.entidades.Aluno.Status;
 import com.grupo11.universidade.interfaces.CRUD;
@@ -32,18 +29,6 @@ public class AlunoRepository implements CRUD<Aluno> {
 		Aluno aluno = new Aluno(id, 7L, "Nome Teste", c.getTime(),
 				"teste@teste", 77L, Status.ATIVO);
 
-		try {
-
-			final String json = new ObjectMapper()
-					.setDateFormat(new SimpleDateFormat("yyyy-MM-dd"))
-					.writeValueAsString(aluno);
-			
-			System.out.println(json);
-
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-
 		return aluno;
 	}
 
@@ -61,12 +46,6 @@ public class AlunoRepository implements CRUD<Aluno> {
 
 		Aluno teste3 = new Aluno(3L, 33L, "Nome Teste 3", c.getTime(), 
 				"teste3@teste", 333L, Status.ATIVO);
-
-		RepositorioBase.lerArquivo(RepositorioBase.CAMINHO_DE_ALUNOS, 
-				linha -> {
-					if ( ! linha.isBlank())
-						System.out.println(linha);
-					});
 		
 		return List.of(teste1, teste2, teste3);
 	}
