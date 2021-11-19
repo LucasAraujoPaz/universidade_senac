@@ -17,6 +17,8 @@ public class Aluno extends PessoaFisica {
 	
 	private int status;
 
+	Aluno() {}
+	
 	public Aluno(
 			long id,
 			long cpf,

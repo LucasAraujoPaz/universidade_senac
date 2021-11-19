@@ -3,15 +3,20 @@ package com.grupo11.universidade.repositorios;
 import java.util.Calendar;
 import java.util.List;
 
-import org.springframework.web.bind.annotation.RestController;
-
 import com.grupo11.universidade.entidades.Aluno;
 import com.grupo11.universidade.entidades.Aluno.Status;
 import com.grupo11.universidade.interfaces.CRUD;
 
-@RestController
 public class AlunoRepository implements CRUD<Aluno> {
 
+	private static final AlunoRepository instance = new AlunoRepository();
+	
+	private AlunoRepository() {}
+	
+	public synchronized static AlunoRepository getInstance() {
+		return instance;
+	}
+	
 	@Override
 	public Aluno criar(Aluno aluno) {
 
@@ -59,8 +64,7 @@ public class AlunoRepository implements CRUD<Aluno> {
 	}
 
 	@Override
-	public boolean deletar(long id) {
-		return true;
+	public void deletar(long id) {
 	}
 
 }

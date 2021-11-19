@@ -12,6 +12,6 @@ public interface CRUD<T> {
 	
 	T atualizar(T entidade);
 	
-	boolean deletar(long id);
+	void deletar(long id);
 
 }

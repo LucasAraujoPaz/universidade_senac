@@ -3,6 +3,8 @@ package com.grupo11.universidade.entidades;
 import java.util.Date;
 
 public class Professor extends PessoaFisica {
+
+	Professor() {};
 	
 	public Professor(
 			long id,

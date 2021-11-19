@@ -47,8 +47,8 @@ public class ProfessorController implements CRUD<Professor> {
 
 	@Override
 	@DeleteMapping("/{id}")
-	public boolean deletar(@PathVariable long id) {
-		return professorService.deletar(id);
+	public void deletar(@PathVariable long id) {
+		professorService.deletar(id);
 	}
 
 }

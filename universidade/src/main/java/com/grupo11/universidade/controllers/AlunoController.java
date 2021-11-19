@@ -47,8 +47,8 @@ public class AlunoController implements CRUD<Aluno> {
 
 	@Override
 	@DeleteMapping("/{id}")
-	public boolean deletar(@PathVariable long id) {
-		return alunoService.deletar(id);
+	public void deletar(@PathVariable long id) {
+		alunoService.deletar(id);
 	}
 
 }

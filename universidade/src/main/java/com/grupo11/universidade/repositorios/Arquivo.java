@@ -9,113 +9,117 @@ import java.nio.file.StandardOpenOption;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
+import com.grupo11.universidade.excecoes.ArquivoException;
+
 public class Arquivo {
 	
 	private static final String PASTA_RAIZ = "C:/universidade_teste/";
 	
-	public static final String CAMINHO_DE_ALUNOS = PASTA_RAIZ + "alunos.txt";
-	public static final String CAMINHO_DE_FORNECEDORES = PASTA_RAIZ + "fornecedores.txt";
-	public static final String CAMINHO_DE_PROFESSORES = PASTA_RAIZ + "professores.txt";
+	enum Caminho {
+		
+		ALUNOS(PASTA_RAIZ + "alunos.txt"),
+		FORNECEDORES(PASTA_RAIZ + "fornecedores.txt"),
+		PROFESSORES(PASTA_RAIZ + "professores.txt");
+		
+		public final String nome;
+		Caminho(String caminho) { this.nome = caminho; }
+	}
 	
 	static {
 		criarRepositorioSeNaoExistir();
 	}
 	
 	private static void criarRepositorioSeNaoExistir() {
-		
+
 		try {
 			if ( ! Files.exists(Path.of(PASTA_RAIZ))) {
 				Files.createDirectory(Path.of(PASTA_RAIZ));
 				System.out.println("Pasta criada: " + PASTA_RAIZ);
 			}
 			
-			File[] arquivos = { 
-					new File(CAMINHO_DE_ALUNOS),
-					new File(CAMINHO_DE_FORNECEDORES),
-					new File(CAMINHO_DE_PROFESSORES) };
+			for (Caminho caminho : Caminho.values()) {
 				
-			for (File arquivo : arquivos)
+				File arquivo = new File(caminho.nome);
+				
 				if (arquivo.createNewFile())
 					System.out.println("Arquivo criado: " + arquivo.getName());
+			}
 		
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new ArquivoException(e);
 		}
 	}
 	
-	public static void lerArquivo(String caminho, Consumer<String> acao) {
+	public static void lerArquivo(Caminho caminho, Consumer<String> acao) {
 		
-		try (Stream<String> linhas = Files.lines(Paths.get(caminho))) {
+		try (Stream<String> linhas = Files.lines(Paths.get(caminho.nome))) {
 
 			linhas.forEachOrdered(linha -> acao.accept(linha));
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new ArquivoException(e);
 		}
 	}
 	
-	public static String lerLinha(String caminho, long indice) {
+	public static String lerLinha(long indiceDeBase0, Caminho caminho) {
 		
-		try (Stream<String> linhas = Files.lines(Paths.get(caminho))) {
+		try (Stream<String> linhas = Files.lines(Paths.get(caminho.nome))) {
 			
-		    return linhas.skip(indice).findFirst().orElse(null);
+		    return linhas.skip(indiceDeBase0).findFirst().orElse(null);
 		    
 		} catch(Exception e) {
-			e.printStackTrace();
+			throw new ArquivoException(e);
 		}
-		
-		return null;
 	}
 	
-	public static void acrescentarLinha(String caminho, String linha) {
+	public static void acrescentarLinha(String linha, Caminho caminho) {
 	    
 	    try {
 			Files.write(
-					Paths.get(caminho), 
+					Paths.get(caminho.nome), 
 					(linha + "\n").getBytes(), 
 					StandardOpenOption.APPEND);
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new ArquivoException(e);
 		}
 	}
 	
-	public static void substituirLinha(String caminho, long indice, String linhaNova) {
+	public static void substituirLinha(long indiceDeBase0, String linhaNova, Caminho caminho) {
 		
 		var linhasAtualizadas = new StringBuilder();
 		int[] i = { 0 };
 		
-		lerArquivo(caminho, linhaAntiga -> {
+		lerArquivo(caminho, 
+				linhaAntiga -> {
 			
-			if (i[0] == indice)
+			if (i[0] == indiceDeBase0)
 				linhasAtualizadas.append(linhaNova).append("\n");
 			else 
 				linhasAtualizadas.append(linhaAntiga).append("\n");
 			
-			++i[0];
-		});
+			++i[0]; 
+			});
 
 	    try {
 			Files.write(
-					Paths.get(caminho), 
+					Paths.get(caminho.nome), 
 					linhasAtualizadas.toString().getBytes(), 
 					StandardOpenOption.TRUNCATE_EXISTING);
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new ArquivoException(e);
 		}
 	}
 	
-	public static void zerarLinha(String caminho, long indice) {
-		substituirLinha(caminho, indice, "");
+	public static void zerarLinha(long indice, Caminho caminho) {
+		substituirLinha(indice, "", caminho);
 	}
 	
-	public static Long obterNumeroDeLinhas(String caminho) {
+	public static long obterNumeroDeLinhas(Caminho caminho) {
 		
-		try (Stream<String> linhas = Files.lines(Paths.get(caminho))) {
+		try (Stream<String> linhas = Files.lines(Paths.get(caminho.nome))) {
 		    return linhas.count();
 		} catch(Exception e) {
-			e.printStackTrace();
+			throw new ArquivoException(e);
 		}
-		
-		return null;
 	}
 }

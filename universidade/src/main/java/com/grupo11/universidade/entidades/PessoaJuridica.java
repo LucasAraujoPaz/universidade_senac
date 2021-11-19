@@ -1,12 +1,16 @@
 package com.grupo11.universidade.entidades;
 
-public abstract class PessoaJuridica {
+import com.grupo11.universidade.interfaces.EntidadeComId;
+
+public abstract class PessoaJuridica implements EntidadeComId {
 
 	protected long id;
 	protected long cnpj;
 	protected String nome;
 	protected String email;
 	protected long telefone;
+	
+	PessoaJuridica() {}
 	
 	public PessoaJuridica(
 			long id,

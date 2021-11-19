@@ -47,8 +47,8 @@ public class FornecedorController implements CRUD<Fornecedor> {
 
 	@Override
 	@DeleteMapping("/{id}")
-	public boolean deletar(@PathVariable long id) {
-		return fornecedorService.deletar(id);
+	public void deletar(@PathVariable long id) {
+		fornecedorService.deletar(id);
 	}
 
 }

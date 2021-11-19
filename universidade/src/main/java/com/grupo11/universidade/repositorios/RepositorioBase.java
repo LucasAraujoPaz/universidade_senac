@@ -6,30 +6,50 @@ import java.util.List;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.grupo11.universidade.excecoes.JsonException;
+import com.grupo11.universidade.excecoes.PessoaInexistenteException;
+import com.grupo11.universidade.interfaces.EntidadeComId;
+import com.grupo11.universidade.repositorios.Arquivo.Caminho;
 
 public class RepositorioBase {
 	
-	public static void criar(Object entidade, String caminho) {
+	private RepositorioBase() {}
+		
+	public static <T extends EntidadeComId> T criar(T entidade, Caminho caminho) {
+		
+		long numeroDeLinhas = Arquivo.obterNumeroDeLinhas(caminho);
+		
+		entidade.setId(numeroDeLinhas);
 		
 		String json = converterObjetoParaJson(entidade);
 		
-		Arquivo.acrescentarLinha(caminho, json);
+		Arquivo.acrescentarLinha(json, caminho);
+		
+		return entidade;
 	}
 
-	public static <T> T obter(long id, String caminho, Class<T> classe) {
+	public static <T> T obter(long id, Caminho caminho, Class<T> classe) {
 		
-		String json = Arquivo.lerLinha(caminho, id);
+		long numeroDeLinhas = Arquivo.obterNumeroDeLinhas(caminho);
+		
+		if (id >= numeroDeLinhas)
+			throw new PessoaInexistenteException();
+		
+		String json = Arquivo.lerLinha(id, caminho);
+		
+		if (json == null || json.isBlank())
+			throw new PessoaInexistenteException();
 		
 		T objeto = converterJsonParaObjeto(json, classe);
 		
 		return objeto;
 	}
 
-	public static <T> List<T> listar(String caminho, Class<T> classe) {
+	public static <T> List<T> listar(Caminho caminho, Class<T> classe) {
 		
 		List<T> lista = new LinkedList<>(); 
 		
-		Arquivo.lerArquivo(caminho, 
+		Arquivo.lerArquivo(caminho,
 				linha -> {
 					if (linha == null || linha.isBlank())
 						return;
@@ -42,16 +62,30 @@ public class RepositorioBase {
 		return lista;
 	}
 
-	public <T> void atualizar(T entidade, String caminho, long id) {
+	public static <T extends EntidadeComId> T atualizar(T entidade, Caminho caminho) {
+		
+		long id = entidade.getId();
+		
+		long numeroDeLinhas = Arquivo.obterNumeroDeLinhas(caminho);
+		
+		if (id >= numeroDeLinhas)
+			throw new PessoaInexistenteException();
 		
 		String json = converterObjetoParaJson(entidade);
 		
-		Arquivo.substituirLinha(caminho, id, json);
+		Arquivo.substituirLinha(id, json, caminho);
+		
+		return entidade;
 	}
 
-	public static void deletar(String caminho, long id) {
+	public static void deletar(long id, Caminho caminho) {
 		
-		Arquivo.zerarLinha(caminho, id);
+		long numeroDeLinhas = Arquivo.obterNumeroDeLinhas(caminho);
+		
+		if (id >= numeroDeLinhas)
+			throw new PessoaInexistenteException();
+		
+		Arquivo.zerarLinha(id, caminho);
 	}
 	
 	public static String converterObjetoParaJson(Object objeto) {
@@ -64,10 +98,8 @@ public class RepositorioBase {
 			return json;
 
 		} catch (JsonProcessingException e) {
-			e.printStackTrace();
+			throw new JsonException(e);
 		}
-
-		return null;
 	}
 	
 	public static <T> T converterJsonParaObjeto(String json, Class<T> classe) {
@@ -78,9 +110,7 @@ public class RepositorioBase {
 			return objeto;
 			
 		} catch (JsonProcessingException e) {
-			e.printStackTrace();
+			throw new JsonException(e);
 		}
-
-		return null;
 	}
 }

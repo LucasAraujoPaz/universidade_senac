@@ -2,7 +2,9 @@ package com.grupo11.universidade.entidades;
 
 import java.util.Date;
 
-public abstract class PessoaFisica {
+import com.grupo11.universidade.interfaces.EntidadeComId;
+
+public abstract class PessoaFisica implements EntidadeComId {
 
 	protected long id;
 	protected long cpf;
@@ -10,6 +12,8 @@ public abstract class PessoaFisica {
 	protected Date dataDeNascimento;
 	protected String email;
 	protected long telefone;
+	
+	PessoaFisica() {}
 	
 	public PessoaFisica(
 			Long id,
@@ -28,9 +32,11 @@ public abstract class PessoaFisica {
 		setTelefone(telefone);
 	}
 	
+	@Override
 	public long getId() {
 		return id;
 	}
+	@Override
 	public void setId(long id) {
 		this.id = id;
 	}

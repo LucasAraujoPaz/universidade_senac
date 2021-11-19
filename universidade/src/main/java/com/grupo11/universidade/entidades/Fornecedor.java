@@ -4,6 +4,8 @@ public class Fornecedor extends PessoaJuridica {
 	
 	private String descricao;
 	
+	Fornecedor() {}
+	
 	public Fornecedor(
 			long id,
 			long cnpj, 
