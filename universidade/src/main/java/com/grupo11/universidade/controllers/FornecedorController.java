@@ -50,5 +50,4 @@ public class FornecedorController implements CRUD<Fornecedor> {
 	public void deletar(@PathVariable long id) {
 		fornecedorService.deletar(id);
 	}
-
 }

@@ -50,7 +50,6 @@ public class AlunoController implements CRUD<Aluno> {
 	public void deletar(@PathVariable long id) {
 		alunoService.deletar(id);
 	}
-
 }
 /**
  * Exemplo de uso:

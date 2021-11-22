@@ -38,5 +38,4 @@ public class Aluno extends PessoaFisica {
 	public void setStatus(Status status) {
 		this.status = status.id;
 	}
-	
 }

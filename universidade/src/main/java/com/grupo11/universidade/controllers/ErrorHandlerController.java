@@ -20,7 +20,7 @@ public class ErrorHandlerController implements ErrorController {
 	@RequestMapping("/error")
 	public String enviarMensagemDeErro() {
 	    
-		return "Houve um erro.";
+		return "Houve um erro.\n Verifique se digitou o endereço corretamente.";
 	}
 
 	@ExceptionHandler(PessoaInexistenteException.class)
@@ -36,11 +36,12 @@ public class ErrorHandlerController implements ErrorController {
 	
 	@ExceptionHandler(Exception.class)
 	@ResponseStatus
-	public MensagemDeErro enviarMensagemDeErro(HttpServletRequest r, Exception e) {
+	public MensagemDeErro enviarMensagemDeErro(
+			HttpServletRequest r, 
+			Exception e) {
 	    
 		e.printStackTrace();
 		
 	    return new MensagemDeErro(e);
     }
-	
 }

@@ -27,5 +27,4 @@ public class Professor extends PessoaFisica {
 	public void setSalario(float salario) {
 		this.salario = salario;
 	}
-
 }

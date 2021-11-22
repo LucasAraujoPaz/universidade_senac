@@ -10,5 +10,4 @@ public class HelloController {
 	public String index() {
 		return "Bem vindo à universidade!";
 	}
-
 }

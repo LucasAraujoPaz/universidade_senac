@@ -24,5 +24,4 @@ public class Fornecedor extends PessoaJuridica {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-
 }

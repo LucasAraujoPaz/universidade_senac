@@ -50,5 +50,4 @@ public class ProfessorController implements CRUD<Professor> {
 	public void deletar(@PathVariable long id) {
 		professorService.deletar(id);
 	}
-
 }

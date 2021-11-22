@@ -57,5 +57,4 @@ public abstract class PessoaJuridica implements EntidadeComId {
 	public void setTelefone(long telefone) {
 		this.telefone = telefone;
 	}
-
 }

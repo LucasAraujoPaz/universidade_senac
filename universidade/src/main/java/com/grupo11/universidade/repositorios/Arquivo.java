@@ -15,7 +15,7 @@ public class Arquivo {
 	
 	private static final String PASTA_RAIZ = "C:/universidade_teste/";
 	
-	enum Caminho {
+	public enum Caminho {
 		
 		ALUNOS(PASTA_RAIZ + "alunos.txt"),
 		FORNECEDORES(PASTA_RAIZ + "fornecedores.txt"),
@@ -84,7 +84,10 @@ public class Arquivo {
 		}
 	}
 	
-	public static void substituirLinha(long indiceDeBase0, String linhaNova, Caminho caminho) {
+	public static void substituirLinha(
+			long indiceDeBase0, 
+			String linhaNova, 
+			Caminho caminho) {
 		
 		var linhasAtualizadas = new StringBuilder();
 		int[] i = { 0 };

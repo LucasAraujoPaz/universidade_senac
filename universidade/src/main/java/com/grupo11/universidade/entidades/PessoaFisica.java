@@ -70,5 +70,4 @@ public abstract class PessoaFisica implements EntidadeComId {
 	public void setTelefone(long telefone) {
 		this.telefone = telefone;
 	}
-
 }
