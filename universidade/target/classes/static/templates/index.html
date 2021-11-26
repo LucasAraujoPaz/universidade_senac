@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Universidade</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+</head>
+<body>
+    <header>
+        <h3>Universidade</h3>
+        <nav>
+            <a href="#alunos">Alunos</a>
+            <a href="#">Fornecedores</a>
+            <a href="#">Professores</a>
+        </nav>
+    </header>
+    <div id="corpo">
+
+    </div>
+    <footer>
+        <small>Universidade</small>
+    </footer>
+    <script> 
+    // @ts-check
+    
+    const corpo = document.querySelector("#corpo");
+
+    document.querySelector("a").onclick = 
+    async () => await doGetText("alunos/aluno.html");
+
+    async function doGetText(url) {
+        
+        const response = await fetch(url);
+        return await response.text();
+    }
+
+    function doGetJson(url) {
+        
+        return fetch(url)
+        .then(response => response.json())
+        .catch(reason => console.error(reason))
+    }
+
+    function doPost(url, object) {
+        
+        return fetch(url, {
+            method: "POST",
+            body:  JSON.stringify(object),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        .then(response => response.json())
+        .catch(reason => console.error(reason))
+    }
+
+    function doPut(url, object) {
+        
+        return fetch(url, {
+            method: "PUT",
+            body:  JSON.stringify(object),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        .then(response => response.json())
+        .catch(reason => console.error(reason))
+    }
+
+    function doDelete(url) {
+        
+        return fetch(url, {
+            method: "DELETE"
+        })
+        .then(response => response.ok)
+        .catch(reason => console.error(reason))
+    }
+    </script>
+</body>
+</html>
