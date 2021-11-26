@@ -33,7 +33,7 @@ class Fornecedor {
     }
 }
 
-/**@type {ICRUD<Fornecedor>} */
+/** @type {ICRUD<Fornecedor>} */
 Fornecedor.CRUD = {
 
     URL: Internet.URLS.URL_FORNECEDORES,
@@ -72,10 +72,6 @@ Fornecedor.Formulario = {
         await renderizarCorpo("fornecedores/fornecedor.html");
 
         Formulario.preencher(Fornecedor, fornecedor);
-
-        const elements = document.forms.namedItem(this.nomeDoFormulario)?.elements;
-        if (! (elements && fornecedor) ) 
-            return;
     },
 
     obter() {
@@ -84,12 +80,12 @@ Fornecedor.Formulario = {
         if (!elements)
             throw new Error("Erro no formulário.");
 
-        const fornecedor = new Fornecedor(//@ts-expect-error
-            elements.id.value.length == 0 ? -1 : elements.id.value, //@ts-expect-error
-            elements.cnpj.value, //@ts-expect-error
-            elements.nome.value, //@ts-expect-error
-            elements.email.value, //@ts-expect-error
-            elements.telefone.value, //@ts-expect-error
+        const fornecedor = new Fornecedor( // @ts-expect-error
+            elements.id.value.length == 0 ? -1 : elements.id.value, // @ts-expect-error
+            elements.cnpj.value, // @ts-expect-error
+            elements.nome.value, // @ts-expect-error
+            elements.email.value, // @ts-expect-error
+            elements.telefone.value, // @ts-expect-error
             elements.descricao.value);
         
         return fornecedor;

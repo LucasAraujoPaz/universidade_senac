@@ -19,11 +19,11 @@ class Lista {
         // @ts-expect-error
         this.#listar(lista);
 
-        /**@type {HTMLButtonElement}*/
+        /** @type {HTMLButtonElement} */
         const criar = (document.querySelector("#lista [name='criar']"));
-        /**@type {HTMLButtonElement}*/
+        /** @type {HTMLButtonElement} */
         const editar = (document.querySelector("#lista [name='editar']"));
-            /**@type {HTMLButtonElement}*/
+        /** @type {HTMLButtonElement} */
         const deletar = (document.querySelector("#lista [name='deletar']"));
 
         criar.onclick = async () => await classe.Formulario.preencher(null);
@@ -63,7 +63,7 @@ class Lista {
     
     static #obterIdSelecionado() {
 
-        /**@type {HTMLSelectElement} */
+        /** @type {HTMLSelectElement} */
         const select = (document.querySelector("#lista [name='seletor']"));
         const id = select.selectedOptions[0]?.value;
         return id;

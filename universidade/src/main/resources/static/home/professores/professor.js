@@ -36,7 +36,7 @@ class Professor {
     }
 }
 
-/**@type {ICRUD<Professor>} */
+/** @type {ICRUD<Professor>} */
 Professor.CRUD = {
 
     URL: Internet.URLS.URL_PROFESSORES,
@@ -93,13 +93,13 @@ Professor.Formulario = {
         if (!elements)
             throw new Error("Erro no formulário.");
 
-        const professor = new Professor(//@ts-expect-error
-            elements.id.value.length == 0 ? -1 : elements.id.value, //@ts-expect-error
-            elements.cpf.value, //@ts-expect-error
-            elements.nome.value, //@ts-expect-error
-            sanitizarData(elements.dataDeNascimento.value), //@ts-expect-error
-            elements.email.value, //@ts-expect-error
-            elements.telefone.value, //@ts-expect-error
+        const professor = new Professor( // @ts-expect-error
+            elements.id.value.length == 0 ? -1 : elements.id.value, // @ts-expect-error
+            elements.cpf.value, // @ts-expect-error
+            elements.nome.value, // @ts-expect-error
+            sanitizarData(elements.dataDeNascimento.value), // @ts-expect-error
+            elements.email.value, // @ts-expect-error
+            elements.telefone.value, // @ts-expect-error
             elements.salario.value);
         
         return professor;

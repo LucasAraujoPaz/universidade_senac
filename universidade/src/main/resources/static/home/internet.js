@@ -12,9 +12,7 @@ class Internet {
 
     static get URLS() { return this.#URLS; }
 
-    /**
-     * @param {RequestInfo} url
-     */
+    /** @param {RequestInfo} url */
     static async getText(url) {
 
         try {
@@ -26,9 +24,7 @@ class Internet {
         }
     }
 
-    /**
-     * @param {RequestInfo} url
-     */
+    /** @param {RequestInfo} url */
     static async getJson(url) {
 
         try {
@@ -96,13 +92,13 @@ class Internet {
         }
     }
 
-    /**
-     * @param {string} url
-     */
+    /** @param {string} url */
     static async loadHtml(url) {
+
         const html = await this.getText(url);
         const container = document.createElement("div");
         container.innerHTML = html ?? "";
+
         /*const baseUrl = this.#getBaseUrl(url);
         const scripts = container.querySelectorAll("script");
         for (const script of scripts) {

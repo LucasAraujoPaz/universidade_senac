@@ -36,7 +36,7 @@ class Aluno {
     }
 }
 
-/**@type {ICRUD<Aluno>} */
+/** @type {ICRUD<Aluno>} */
 Aluno.CRUD = {
     
     URL: Internet.URLS.URL_ALUNOS,
@@ -94,13 +94,13 @@ Aluno.Formulario = {
         if (!elements)
             throw new Error("Erro no formulário.");
 
-        const aluno = new Aluno( //@ts-expect-error
-            elements.id.value.length == 0 ? -1 : elements.id.value, //@ts-expect-error
-            elements.cpf.value, //@ts-expect-error
-            elements.nome.value, //@ts-expect-error
-            sanitizarData(elements.dataDeNascimento.value), //@ts-expect-error
-            elements.email.value, //@ts-expect-error
-            elements.telefone.value, //@ts-expect-error
+        const aluno = new Aluno( // @ts-expect-error
+            elements.id.value.length == 0 ? -1 : elements.id.value, // @ts-expect-error
+            elements.cpf.value, // @ts-expect-error
+            elements.nome.value, // @ts-expect-error
+            sanitizarData(elements.dataDeNascimento.value), // @ts-expect-error
+            elements.email.value, // @ts-expect-error
+            elements.telefone.value, // @ts-expect-error
             elements.status.value.length == 0 ? 1 : elements.status.value);
         
         return aluno;
