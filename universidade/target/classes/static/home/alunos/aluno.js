@@ -16,20 +16,12 @@
  */
 class Aluno {
 
-    /**
-     * @param {number} id
-     * @param {number} cpf
-     * @param {string} nome
-     * @param {Date} dataDeNascimento
-     * @param {string} email
-     * @param {number} telefone
-     * @param {number | string} status 
-     */
-    constructor(id, cpf, nome,dataDeNascimento, email, telefone, status) {
-            this.id = id;
+    /** @param {IAluno} aluno */
+    constructor({id, cpf, nome, dataDeNascimento, email, telefone, status}) {
+            this.id = sanitizarId(id);
             this.cpf = cpf;
             this.nome = nome;
-            this.dataDeNascimento = dataDeNascimento;
+            this.dataDeNascimento = sanitizarData(dataDeNascimento);
             this.email = email;
             this.telefone = telefone;
             this.status = status;
@@ -42,18 +34,14 @@ Aluno.CRUD = {
     URL: Internet.URLS.URL_ALUNOS,
 
     async listar() {
-        /** @type {Aluno[]} */
+        /** @type {IAluno[]} */
         const alunos = await Internet.getJson(this.URL)
-        alunos.forEach(aluno => aluno.dataDeNascimento = sanitizarData(aluno.dataDeNascimento));
-
-        return alunos;
+        return alunos.map(aluno => new Aluno(aluno));
     },
     async obter(id) {
-        /** @type {Aluno} */
+        /** @type {IAluno} */
         const aluno = await Internet.getJson(this.URL + "/" + id);
-        aluno.dataDeNascimento = sanitizarData(aluno.dataDeNascimento);
-
-        return aluno;
+        return new Aluno(aluno);
     },
     async criar(aluno) {
         return await Internet.post(this.URL, aluno);
@@ -78,30 +66,34 @@ Aluno.Formulario = {
 
         Formulario.preencher(Aluno, aluno);
 
-        const elements = document.forms.namedItem(this.nomeDoFormulario)?.elements;
+        /** @type {HTMLInputElement} */
+        const dataDeNascimento = (document.forms
+            .namedItem(this.nomeDoFormulario)?.elements
+            .namedItem("dataDeNascimento"));
 
-        if (! (elements && aluno) ) 
+        if (! (dataDeNascimento && aluno) ) 
             return;
 
-        // @ts-expect-error
-        elements.dataDeNascimento.value = 
+        dataDeNascimento.value = 
             aluno.dataDeNascimento.toLocaleDateString("en-CA");
     },
 
     obter() {
-            
-        const elements = document.forms.namedItem(this.nomeDoFormulario)?.elements;
-        if (!elements)
-            throw new Error("Erro no formulário.");
 
-        const aluno = new Aluno( // @ts-expect-error
-            elements.id.value.length == 0 ? -1 : elements.id.value, // @ts-expect-error
-            elements.cpf.value, // @ts-expect-error
-            elements.nome.value, // @ts-expect-error
-            sanitizarData(elements.dataDeNascimento.value), // @ts-expect-error
-            elements.email.value, // @ts-expect-error
-            elements.telefone.value, // @ts-expect-error
-            elements.status.value.length == 0 ? 1 : elements.status.value);
+        const form = document.forms.namedItem(this.nomeDoFormulario);
+        if (!form)
+            throw new Error("Erro no formulário.");
+        const fd = new FormData(form);
+
+        const aluno = new Aluno({
+            id: sanitizarId(fd.get("id")),
+            cpf: Number(fd.get("cpf")),
+            nome: String(fd.get("nome")),
+            dataDeNascimento: new Date(String(fd.get("dataDeNascimento"))),
+            email: String(fd.get("email")),
+            telefone: Number(fd.get("telefone")),
+            status: Number(fd.get("status")) ?? 0
+        });
         
         return aluno;
     }
