@@ -6,14 +6,6 @@ class Lista {
      */
     static async renderizarLista(classe) {
         await renderizarCorpo("lista/lista.html");
-        await this.#preencher(classe);
-    }
-
-    /**
-     * @template T
-     * @param {IFormularioCRUD<T>} classe
-     */
-    static async #preencher(classe) {
 
         const lista = await classe.CRUD.listar();
         // @ts-expect-error
@@ -28,16 +20,16 @@ class Lista {
 
         criar.onclick = async () => await classe.Formulario.preencher(null);
         editar.onclick = async () => {
-            const id = Number(this.#obterIdSelecionado());
-            if (isNaN(id)) 
+            const id = this.#obterIdSelecionado();
+            if (id === -1) 
                 return;
 
             const objeto = await classe.CRUD.obter(id);
             await classe.Formulario.preencher(objeto);
         };
         deletar.onclick = () => {
-            const id = Number(this.#obterIdSelecionado());
-            if (isNaN(id)) 
+            const id = this.#obterIdSelecionado();
+            if (id === -1) 
                 return;
 
             classe.CRUD.deletar(id);
@@ -66,6 +58,6 @@ class Lista {
         /** @type {HTMLSelectElement} */
         const select = (document.querySelector("#lista [name='seletor']"));
         const id = select.selectedOptions[0]?.value;
-        return id;
+        return sanitizarId(id);
     }
 }

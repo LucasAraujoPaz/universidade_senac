@@ -16,15 +16,10 @@
 class Fornecedor {
 
     /**
-     * @param {number} id
-     * @param {number} cnpj
-     * @param {string} nome
-     * @param {string} email
-     * @param {number} telefone
-     * @param {string} descricao
+     * @param {IFornecedor} fornecedor
      */
-    constructor(id, cnpj, nome, email, telefone, descricao) {
-            this.id = id;
+    constructor({id, cnpj, nome, email, telefone, descricao}) {
+            this.id = sanitizarId(id);
             this.cnpj = cnpj;
             this.nome = nome;
             this.email = email;
@@ -39,16 +34,14 @@ Fornecedor.CRUD = {
     URL: Internet.URLS.URL_FORNECEDORES,
 
     async listar() {
-        /** @type {Fornecedor[]} */
+        /** @type {IFornecedor[]} */
         const fornecedores = await Internet.getJson(this.URL)
-
-        return fornecedores;
+        return fornecedores.map(fornecedor => new Fornecedor(fornecedor));
     },
     async obter(id) {
-        /** @type {Fornecedor} */
+        /** @type {IFornecedor} */
         const fornecedor = await Internet.getJson(this.URL + "/" + id);
-
-        return fornecedor;
+        return new Fornecedor(fornecedor);
     },
     async criar(fornecedor) {
         return await Internet.post(this.URL, fornecedor);
@@ -76,17 +69,19 @@ Fornecedor.Formulario = {
 
     obter() {
             
-        const elements = document.forms.namedItem(this.nomeDoFormulario)?.elements;
-        if (!elements)
+        const form = document.forms.namedItem(this.nomeDoFormulario);
+        if (!form)
             throw new Error("Erro no formulário.");
+        const fd = new FormData(form);
 
-        const fornecedor = new Fornecedor( // @ts-expect-error
-            elements.id.value.length == 0 ? -1 : elements.id.value, // @ts-expect-error
-            elements.cnpj.value, // @ts-expect-error
-            elements.nome.value, // @ts-expect-error
-            elements.email.value, // @ts-expect-error
-            elements.telefone.value, // @ts-expect-error
-            elements.descricao.value);
+        const fornecedor = new Fornecedor({
+            id: sanitizarId(fd.get("id")),
+            cnpj: Number(fd.get("cpf")),
+            nome: String(fd.get("nome")),
+            email: String(fd.get("email")),
+            telefone: Number(fd.get("telefone")),
+            descricao: String(fd.get("descricao"))
+        });
         
         return fornecedor;
     }
