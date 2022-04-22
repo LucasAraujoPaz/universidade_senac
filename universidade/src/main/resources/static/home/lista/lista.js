@@ -2,21 +2,23 @@ class Lista {
 
     /**
      * @template T
-     * @param {IFormularioCRUD<T>} classe
+     * @param {IFormularioCRUD<T & IEntidadeComId>} classe
      */
     static async renderizarLista(classe) {
         await renderizarCorpo("lista/lista.html");
 
         const lista = await classe.CRUD.listar();
-        // @ts-expect-error
         this.#listar(lista);
 
-        /** @type {HTMLButtonElement} */
-        const criar = (document.querySelector("#lista [name='criar']"));
-        /** @type {HTMLButtonElement} */
-        const editar = (document.querySelector("#lista [name='editar']"));
-        /** @type {HTMLButtonElement} */
-        const deletar = (document.querySelector("#lista [name='deletar']"));
+        
+        const criar = /** @type {HTMLButtonElement} */
+            (document.querySelector("#lista [name='criar']"));
+        
+        const editar = /** @type {HTMLButtonElement} */
+            (document.querySelector("#lista [name='editar']"));
+        
+        const deletar = /** @type {HTMLButtonElement} */
+            (document.querySelector("#lista [name='deletar']"));
 
         criar.onclick = async () => await classe.Formulario.preencher(null);
         editar.onclick = async () => {
@@ -55,8 +57,8 @@ class Lista {
     
     static #obterIdSelecionado() {
 
-        /** @type {HTMLSelectElement} */
-        const select = (document.querySelector("#lista [name='seletor']"));
+        const select = /** @type {HTMLSelectElement} */
+            (document.querySelector("#lista [name='seletor']"));
         const id = select.selectedOptions[0]?.value;
         return sanitizarId(id);
     }

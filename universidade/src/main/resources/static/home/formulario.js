@@ -12,8 +12,8 @@
 
     /**
      * @template T
-     * @param {IFormularioCRUD<T>} classe
-     * @param {T?} objeto
+     * @param {IFormularioCRUD<T & IEntidadeComId>} classe
+     * @param {(implements & T)?} objeto
      */
     static preencher(classe, objeto) {
     
@@ -21,12 +21,13 @@
         const elements = form?.elements;
         if (!elements)
             return;
-                
-        for (const element of elements)// @ts-expect-error
-            if (objeto?.[element.name] !== undefined)// @ts-expect-error
-                element.value = objeto[element.name];
 
         if (objeto) {
+
+            for (const element of elements)
+                if (element instanceof HTMLInputElement && objeto[element.name] !== undefined)
+                    element.value = objeto[element.name];
+
             form.onsubmit = async event => {
                 event.preventDefault();
                 await classe.CRUD.editar(classe.Formulario.obter());

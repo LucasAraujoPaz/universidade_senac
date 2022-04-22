@@ -1,7 +1,10 @@
 class Internet {
 
-    static #a = document.createElement("a");
-    static { this.#a.href = ""; }
+    static #a = (() => { 
+        const a = document.createElement("a"); 
+        a.href = "";
+        return a; 
+    })()
 
     static #URLS = Object.freeze({
         URL_BASE: this.#a.origin, //"http://localhost:8080"

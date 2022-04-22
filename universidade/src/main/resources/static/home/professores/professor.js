@@ -66,8 +66,8 @@ Professor.Formulario = {
 
         Formulario.preencher(Professor, professor);
 
-        /** @type {HTMLInputElement} */
-        const dataDeNascimento = (document.forms
+        const dataDeNascimento =  /** @type {HTMLInputElement} */
+            (document.forms
             .namedItem(this.nomeDoFormulario)?.elements
             .namedItem("dataDeNascimento"));
         
